@@ -30,9 +30,16 @@ to expand a struct field, right click on the field name and click 'Expand' in th
 ## vmlinux:
 
 ### struct kmem_cache
+
+`dsviz ~/kernel/linux-6.1-rc3/vmlinux "struct kmem_cache"`
+
+
 ![kmem_cache](example/kmem_cache.png)
 
 ### struct cred
+
+`dsviz ~/kernel/linux-6.1-rc3/vmlinux "struct cred"`
+
 ![cred](example/cred.png)
 
 # TODO:
