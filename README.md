@@ -6,7 +6,16 @@ Converts a struct in the type info of a specified binary to an interactive graph
  - pywebview -- provides a view of the interactive generated graph without needing to bother with a browser and web server
 
 # Dependencies:
-additionally, gdb and graphviz's 'dot' executable must be found in path
+python dependencies will be installed with module installation:
+```
+pip install .
+```
+additional requirement: gdb and graphviz's 'dot' executable must be found in path
+
+on ubuntu:
+```
+sudo apt install gdb graphviz
+```
 
 # Usage:
 ```
