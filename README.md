@@ -1,7 +1,7 @@
 # Debug Struct Visualizer
 
 Converts a struct in the type info of a specified binary to an interactive graph using:
- - gdb -- for it's python api which includes an easy-to-use interface to access loaded type information, so any debug info format that gdb supports is supported 
+ - gdb -- for it's python api which includes an easy-to-use interface to access loaded type information, so any debug info format that gdb supports is supported
  - graphviz -- for it's graph generation capabilities
  - pywebview -- provides a view of the interactive generated graph without needing to bother with a browser and web server
 
@@ -12,7 +12,7 @@ additionally, gdb and graphviz's 'dot' executable must be found in path
 ```
 dsviz <path-to-binary> <name-of-root-struct> (output-file)
 ```
-if output-file is specified the graphviz dot file will be written to that file each time the graph is updated via interactions 
+if output-file is specified the graphviz dot file will be written to that file each time the graph is updated via interactions
 
 to expand a struct field, right click on the field name and click 'Expand' in the context menu that appears
 
@@ -34,4 +34,4 @@ to expand a struct field, right click on the field name and click 'Expand' in th
 - expand command line options, use argparse
 - validate gdb and dot are in path
 - see if graphviz2drawio works with the graphviz dot files im generating
-- many other things...# dsviz
+- many other things...
