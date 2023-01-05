@@ -43,9 +43,6 @@ to expand a struct field, right click on the field name and click 'Expand' in th
 ![cred](example/cred.png)
 
 # TODO:
-- allow expanding multiple of the same type without them all linking together
-- handle unions more cleanly
-- handle nested struct definitions
 - support closing graph nodes from right click context menu
 - expand command line options, use argparse
 - validate gdb and dot are in path
