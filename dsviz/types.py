@@ -22,6 +22,8 @@ class Struct(Type):
             self.name = "struct"
 
     def init_fields(self):
+        if len(self.fields):
+            return
         for field in self._type.fields():
             self.fields.append(Field(field, self))
 
@@ -32,6 +34,8 @@ class Union(Type):
         self.fields = []
 
     def init_fields(self):
+        if len(self.fields):
+            return
         for field in self._type.fields():
             self.fields.append(Field(field, self))
 
@@ -58,7 +62,7 @@ class Field:
         self.code = cur_type.code
         self.deref_ct = deref_ct
 
-        print(self.name, self.code)
+        #print(self.name, self.code)
 
         match self.code:
             case TypeCode.TYPE_CODE_STRUCT:

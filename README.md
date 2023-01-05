@@ -43,7 +43,6 @@ to expand a struct field, right click on the field name and click 'Expand' in th
 ![cred](example/cred.png)
 
 # TODO:
-- support closing graph nodes from right click context menu
 - expand command line options, use argparse
 - validate gdb and dot are in path
 - see if graphviz2drawio works with the graphviz dot files im generating

@@ -15,6 +15,7 @@ class Graph:
             self,
             row_menu={
                 'Expand': lambda node: self.expand_id(node),
+                'Close': lambda node: self.close_id(node),
             }
         )
 
@@ -31,7 +32,6 @@ class Graph:
 
     def find_id(self, id):
         tid = id
-        print('looking for id:', id)
         idx = None
         if '_' in id:
             split = id.split('_')
@@ -43,6 +43,7 @@ class Graph:
                 if idx is not None:
                     return node.fields[idx].type
                 return node
+        return None
 
     def expand_id(self, id):
         if id.startswith('a_'):
@@ -53,6 +54,39 @@ class Graph:
 
         self.add_node(node)
         self.add_edge(node, id)
+
+        self.server.restart()
+
+    def close_id(self, id):
+        if id.startswith('a_'):
+            id = id[2:]
+
+        # remove field id
+        if '_' in id: id = id[:id.find('_')]
+
+        # close children by following edges of node being closed
+        curr = [id]
+        while len(curr) > 0:
+            for edge in self.edges.copy():
+                src, dest = edge
+                if curr[0] in src:
+                    dest_id = dest[:dest.find(':')]
+                    dest_node = self.find_id(dest_id)
+                    curr += [dest_id]
+                    if dest_node in self.nodes:
+                        self.nodes.remove(dest_node)
+                    self.edges.remove(edge)
+            curr = curr[1:]
+
+        # close this node and remove the edge leading to it
+        for edge in self.edges:
+            src, dest = edge
+            if id in dest:
+                dest_id = dest[:dest.find(':')]
+                dest_node = self.find_id(dest_id)
+                self.nodes.remove(dest_node)
+                self.edges.remove(edge)
+                break
 
         self.server.restart()
 
