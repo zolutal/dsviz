@@ -20,7 +20,7 @@ class Gdb:
         return self.api.lookup_type(type_name)
 
     def find_struct(self, struct_name: str):
-        type = self.lookup_type(struct_name)
+        type = self.lookup_type(struct_name).strip_typedefs()
         if type.code != self.api.TYPE_CODE_STRUCT:
             print("found type was not a struct, code:", type.code)
         return Struct(type)

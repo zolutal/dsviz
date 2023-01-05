@@ -24,23 +24,22 @@ class Graph:
     def add_node(self, type):
         self.nodes.append(type)
 
-    def add_edge(self, type, id):
-        p_type = type._parent._parent
-        p_type_name = p_type.name
-
-        edge = (f"{p_type_name}:{id}", f"{type.name}:{type.name}")
+    def add_edge(self, c_type, f_id):
+        p_type = c_type._parent._parent
+        edge = (f"{p_type.id}:{f_id}", f"{c_type.id}:{c_type.id}")
         self.edges.append(edge)
 
     def find_id(self, id):
-        name = id
+        tid = id
+        print('looking for id:', id)
         idx = None
         if '_' in id:
             split = id.split('_')
-            name = '_'.join(split[:-1])
+            tid = '_'.join(split[:-1])
             idx = int(split[-1])
 
         for node in self.nodes:
-            if name in node.name:
+            if tid == node.id:
                 if idx is not None:
                     return node.fields[idx].type
                 return node
@@ -61,7 +60,7 @@ class Graph:
         digraph_content = ""
 
         for node in self.nodes:
-            digraph_content += graph_node_fmt % (node.name, self.type_table(node))
+            digraph_content += graph_node_fmt % (node.id, self.type_table(node))
 
         for edge in self.edges:
             digraph_content += graph_edge_fmt % edge
@@ -84,9 +83,9 @@ class Graph:
         return svg
 
     def type_table(self, type):
-        rows = header_fmt % (type.name, type.name, type.name)
+        rows = header_fmt % (type.id, type.id, type.name)
         for idx, field in enumerate(type.fields):
-            row_id = f"{type.name}_{idx}"
+            row_id = f"{type.id}_{idx}"
             type_name = field.type.name
             if type_name is None:
                 type_name = str(field.type._type)
