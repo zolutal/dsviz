@@ -51,6 +51,6 @@ to expand a struct field, right click on the field name and click 'Expand' in th
 ![cputlb](example/cputlb.png)
 
 # TODO:
-- expand command line options, use argparse
 - validate gdb and dot are in path
+- allow output format to be specified
 - many other things...

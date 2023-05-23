@@ -1,26 +1,24 @@
 from dsviz.gdb import Gdb
 from dsviz.types import Struct
 from dsviz.graph import Graph
-import pathlib
+
+import argparse
 import sys
 
-def main():
-    if len(sys.argv) < 2:
-        raise Exception("Invalid arguments for command, expected PATH")
-    if len(sys.argv) < 3:
-        raise Exception("Invalid arguments for command, expected SYMBOL")
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser("dsviz")
+    parser.add_argument('path', type=str, help="The path of the binary to run dsviz on")
+    parser.add_argument('name', type=str, help="The name of the type from the debug info to analyze")
+    parser.add_argument('out', type=str, nargs='?', help="Optional path to save the visualization to")
+    return parser.parse_args(sys.argv[1:])
 
-    outfile = None
-    if len(sys.argv) == 4:
-        outfile = sys.argv[3]
+def main():
+    ns: argparse.Namespace = parse_args()
 
     gdb = Gdb()
+    gdb.add_symbol_file(ns.path)
 
-    obj_path = sys.argv[1]
-    gdb.add_symbol_file(obj_path)
-
-    type_name = sys.argv[2]
-    type_obj: Struct = gdb.find_struct(type_name)
+    type_obj: Struct = gdb.find_struct(ns.name)
     type_obj.init_fields()
 
-    g = Graph(type_obj, outfile)
+    Graph(type_obj, ns.out)
