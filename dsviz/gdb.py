@@ -32,13 +32,15 @@ class Gdb:
     def start_server(self):
         """
         Credit: pwntools; Copyright (c) 2015 Gallopsled et al.
-        Starts a gdb api pyrc server
+        Starts a gdb api rpyc server
         """
         socket_dir = tempfile.mkdtemp()
         socket_path = os.path.join(socket_dir, 'socket')
         bridge = self.api_bridge_path()
 
-        gdbscript = f"python socket_path = '{socket_path}'; time.sleep(1)\nsource {bridge}"
+        gdbscript  = f"python socket_path = '{socket_path}';\n"
+        gdbscript += f"source {bridge}"
+
         tmp = tempfile.NamedTemporaryFile(prefix = 'dsv', suffix = '.gdb',
                                               delete = False, mode = 'w+')
         gdbscript = 'shell rm %s\n%s' % (tmp.name, gdbscript)
